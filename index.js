@@ -3,18 +3,36 @@ const core = require('@actions/core');
 
 const OWNER = github.context.repo.owner
 const REPO = github.context.repo.repo
-const WORKFLOW_ID = process.env.WORKFLOW_ID || github.context.workflow
+const WORKFLOW_NAME = process.env.WORKFLOW_NAME || github.context.workflow
 const RUN_ID = process.env.RUN_ID || github.context.runId
 const TOKEN = process.env.TOKEN || core.getInput('GITHUB_TOKEN')
 
 const octo = github.getOctokit(TOKEN)
 
+const getWorkflowByName = async (workflowName) => {
+  const response = await
+    octo.rest.actions.listRepoWorkflows({
+      owner: OWNER,
+      repo: REPO
+    })
+
+  const workflow =
+    response.data.workflows.find( w => w.name === workflowName)
+
+  if (!workflow) {
+    throw Error(`No workflow with name '${workflowName}' found.`)
+  }
+
+  return workflow
+}
+
 const getPreviousRun = async (currentRun) => {
+  const workflow = await getWorkflowByName(WORKFLOW_NAME)
   const response = await
     octo.rest.actions.listWorkflowRuns({
       owner: OWNER,
       repo: REPO,
-      workflow_id: WORKFLOW_ID
+      workflow_id: workflow.id
     })
 
   const relevantRunsByDate = 
@@ -105,5 +123,8 @@ const main = async () => {
   console.log(output)
 }
 
-main().then().catch(console.error)
+main().then().catch(e => {
+  console.error(e)
+  process.exit(1)
+})
 
