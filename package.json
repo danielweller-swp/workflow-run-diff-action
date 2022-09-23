@@ -1,0 +1,14 @@
+{
+  "name": "diff-action",
+  "version": "1.0.0",
+  "description": "A GitHub action that computes the diff between a workflow run and the previous one.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Daniel Weller",
+  "license": "ISC",
+  "dependencies": {
+    "@octokit/rest": "^19.0.4"
+  }
+}
