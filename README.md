@@ -9,3 +9,6 @@ You have a GitHub repository where a push to certain branches triggers a deploym
 You want to include a `git diff` with each deployment that shows the code difference between
 this and the last (succesfull) deployment.
 
+Example output:
+
+![](screenshot.png)
