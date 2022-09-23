@@ -1,13 +1,12 @@
-const { Octokit } = require("@octokit/rest")
+const github = require('@actions/github');
+const core = require('@actions/core');
 
-const OWNER = 'trustbit'
-const REPO = 'CargoSimulation-Experiments'
-const WORKFLOW_ID = 'ci.yml'
-const RUN_ID = '3091145696'
+const OWNER = github.context.repo.owner
+const REPO = github.context.repo.repo
+const WORKFLOW_ID = github.context.workflow
+const RUN_ID = github.context.runId
 
-const octo = new Octokit({
-  auth: process.env.TOKEN
-})
+const octo = github.getOctokit(core.getInput('GITHUB_TOKEN'))
 
 const getPreviousRun = async (currentRun) => {
   const response = await
