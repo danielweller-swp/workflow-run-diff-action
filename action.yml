@@ -1,13 +1,9 @@
 name: 'Workflow Run Diff'
 description: 'Outputs the diff between a workflow run and a previous run.'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  GITHUB_TOKEN:
+    description: 'Token to access the GitHub API'
     required: true
-    default: 'World'
-outputs:
-  time: # id of output
-    description: 'The time we greeted you'
 runs:
   using: 'node16'
   main: 'index.js'
