@@ -3,10 +3,11 @@ const core = require('@actions/core');
 
 const OWNER = github.context.repo.owner
 const REPO = github.context.repo.repo
-const WORKFLOW_ID = github.context.workflow
-const RUN_ID = github.context.runId
+const WORKFLOW_ID = process.env.WORKFLOW_ID || github.context.workflow
+const RUN_ID = process.env.RUN_ID || github.context.runId
+const TOKEN = process.env.TOKEN || core.getInput('GITHUB_TOKEN')
 
-const octo = github.getOctokit(core.getInput('GITHUB_TOKEN'))
+const octo = github.getOctokit(TOKEN)
 
 const getPreviousRun = async (currentRun) => {
   const response = await
