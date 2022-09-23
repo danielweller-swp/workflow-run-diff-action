@@ -12,3 +12,15 @@ this and the last (succesfull) deployment.
 Example output:
 
 ![](screenshot.png)
+
+## Usage
+
+```
+jobs:
+  job_id:
+    steps:
+      - uses: 'danielweller-swp/workflow-run-diff-action@v1'
+        name: Compute diff
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
